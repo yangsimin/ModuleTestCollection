@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_centerVertical="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="50dp"
+        android:paddingBottom="50dp">
+
+        <ImageButton
+            android:id="@+id/btn_arrow_up"
+            android:layout_width="75dp"
+            android:layout_height="75dp"
+            android:scaleType="fitCenter"
+            android:src="@mipmap/arrow_up"/>
+        <ImageButton
+            android:id="@+id/btn_ok"
+            android:layout_width="75dp"
+            android:layout_height="75dp"
+            android:scaleType="fitCenter"
+            android:src="@mipmap/ok"
+            android:layout_marginTop="3dp"/>
+        <ImageButton
+            android:id="@+id/btn_arrow_down"
+            android:layout_width="75dp"
+            android:layout_height="75dp"
+            android:scaleType="fitCenter"
+            android:src="@mipmap/arrow_down"
+            android:layout_marginTop="3dp"/>
+        <ImageButton
+            android:id="@+id/btn_arrow_left"
+            android:layout_width="75dp"
+            android:layout_height="75dp"
+            android:scaleType="fitCenter"
+            android:src="@mipmap/arrow_left"
+            android:layout_marginTop="15dp"/>
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/btn_bad"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="不合格"
+        android:layout_centerInParent="true"/>
+
+    <TextView
+        android:layout_centerHorizontal="true"
+        android:layout_above="@id/btn_bad"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="请按下屏幕右侧实体按键，若有坏，点“不合格"
+        android:layout_marginBottom="10dp"/>
+</RelativeLayout>
