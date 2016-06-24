@@ -57,6 +57,7 @@ public class MainActivity extends AppCompatActivity
     protected void onActivityResult(int requestCode, int resultCode, Intent data)
     {
         TextView tvBtn = (TextView) gvMain.getChildAt(requestCode);
+        if (tvBtn == null) return;
         switch (resultCode)
         {
             case Contants.RESULT_WELL:

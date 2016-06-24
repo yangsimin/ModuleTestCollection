@@ -33,13 +33,21 @@ public class BaseCheckActivity extends AppCompatActivity implements View.OnClick
     private LinearLayout btnLayout;
 
     private Fragment fragment;
+//    private MonitoHomeReceiver receiver;
+    //    private View contentView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
 //        getWindow().setFlags(Contants.FLAG_HOMEKEY_DISPATCHED, Contants.FLAG_HOMEKEY_DISPATCHED);
+//        getWindow().addFlags(Contants.FLAG_HOMEKEY_DISPATCHED);
         setContentView(R.layout.activity_base_check);
+
+        //广播
+//        receiver = new MonitoHomeReceiver();
+//        IntentFilter homeFilter = new IntentFilter(Intent.ACTION_CLOSE_SYSTEM_DIALOGS);
+//        registerReceiver(receiver, homeFilter);
 
         initBtn();
 
@@ -139,4 +147,30 @@ public class BaseCheckActivity extends AppCompatActivity implements View.OnClick
 //        super.onBackPressed();
 //        finish();
 //    }
+
+
+//    @Override
+//    protected void onUserLeaveHint()
+//    {
+//        super.onUserLeaveHint();
+//        if (fragment instanceof KeyPressTestFragment)
+//        {
+//            Intent intent = new Intent(this,BaseCheckActivity.class);
+//            intent.putExtra("position", 7);
+//            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+//            this.startActivity(intent);
+//        }
+//    }
+
+
+    @Override
+    protected void onDestroy()
+    {
+        super.onDestroy();
+//        if (receiver != null)
+//        {
+//            unregisterReceiver(receiver);
+//            receiver = null;
+//        }
+    }
 }

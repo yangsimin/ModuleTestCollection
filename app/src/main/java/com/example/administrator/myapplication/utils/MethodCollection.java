@@ -135,10 +135,13 @@ public class MethodCollection
 //        }
 //    }
 
-    public static boolean writeToSD(String msg)
+    public static boolean writeToSD(String msg, Context context)
     {
-        File file = new File("/storage/sdcard1", "test.txt");
+        File file = new File("/storage/sdcard1/", "test.txt");
+//        File file = new File(Environment.getExternalStorageDirectory().getPath(), "test.txt");
+//        File file = new File("/mnt/sdcard2/", "text.txt");
         FileOutputStream fos;
+
         try
         {
             fos = new FileOutputStream(file);
@@ -150,7 +153,6 @@ public class MethodCollection
             e.printStackTrace();
             return false;
         }
-
     }
 
     //蓝牙开关
@@ -171,7 +173,7 @@ public class MethodCollection
     public static boolean isBlueToothAvailable()
     {
         BluetoothAdapter bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
-        return bluetoothAdapter == null && bluetoothAdapter.isEnabled();
+        return bluetoothAdapter != null && bluetoothAdapter.isEnabled();
     }
 
     //判断GPRS是否可用

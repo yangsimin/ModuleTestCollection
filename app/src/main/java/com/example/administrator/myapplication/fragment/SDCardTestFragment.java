@@ -29,7 +29,7 @@ public class SDCardTestFragment extends BaseFragment
     @Override
     protected void initData()
     {
-        if (MethodCollection.writeToSD("hello world"))
+        if (MethodCollection.writeToSD("hello world", getActivity()))
         {
             tvSDCard.setText("SD卡状态：可用");
             getActivity().setResult(Contants.RESULT_WELL);
