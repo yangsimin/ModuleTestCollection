@@ -1,6 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="Encoding">
+    <file url="file://$PROJECT_DIR$/app/libs/armeabi-v7a/liblocSDK6a.so" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/app/libs/armeabi/liblocSDK6a.so" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/app/libs/locSDK_6.23.jar" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/app/libs/x86/liblocSDK6a.so" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/app/src/main/java/com/keymantek/serialport/utils/HexUtils.java" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/app/src/main/java/com/keymantek/serialport/utils/SerialPort.java" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/app/src/main/java/com/keymantek/serialport/utils/SerialPortOpera.java" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/app/src/main/jni" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/app/src/main/res/drawable/textview_border.xml" charset="GBK" />
     <file url="PROJECT" charset="UTF-8" />
   </component>
 </project>

@@ -10,12 +10,20 @@ android {
         targetSdkVersion 23
         versionCode 1
         versionName "1.0"
+
+        ndk {
+            moduleName "serial_port"
+        }
     }
 
     sourceSets {
         main {
             jniLibs.srcDirs = ['libs']
         }
+    }
+
+    sourceSets.main {
+        jni.srcDirs = []
     }
 
     buildTypes {

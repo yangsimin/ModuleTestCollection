@@ -34,7 +34,6 @@ public class SleepTestFragment extends BaseFragment
             Intent intent = new Intent(DevicePolicyManager.ACTION_ADD_DEVICE_ADMIN);
             intent.putExtra(DevicePolicyManager.EXTRA_DEVICE_ADMIN, componentName);
             getActivity().startActivity(intent);
-            manager.lockNow();
         }
         else
         {

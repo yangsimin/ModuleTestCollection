@@ -1,14 +1,13 @@
 package com.example.administrator.myapplication.adapter;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.TextView;
+import android.widget.Button;
 
-import com.example.administrator.myapplication.R;
+import java.util.List;
 
 /**
  * Created by Administrator on 2016/6/15 0015.
@@ -19,10 +18,17 @@ public class GridViewAdapter extends BaseAdapter
 
     private String[] items;
 
-    public GridViewAdapter(Context context, String[] items)
+    private List<Integer> enbleItem;
+
+    private OnClickListener listener;
+
+    public GridViewAdapter(Context context, String[] items,
+                           List<Integer> enableItem, OnClickListener listener)
     {
         this.context = context;
         this.items = items;
+        this.enbleItem = enableItem;
+        this.listener = listener;
     }
 
     @Override
@@ -44,22 +50,38 @@ public class GridViewAdapter extends BaseAdapter
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent)
+    public View getView(final int position, View convertView, ViewGroup parent)
     {
-        TextView btn;
+        Button btn;
         if (convertView == null)
         {
-            btn = new TextView(context);
+            btn = new Button(context);
         }
         else
         {
-            btn = (TextView) convertView;
+            btn = (Button) convertView;
         }
         btn.setText(getItem(position));
-        btn.setTextColor(Color.BLACK);
+//        btn.setTextColor(Color.BLACK);
         btn.setGravity(Gravity.CENTER);
-        btn.setBackground(context.getResources().getDrawable(R.drawable.selector_btn));
+//        btn.setBackground(context.getResources().getDrawable(R.drawable.selector_btn));
         btn.setPadding(0, 10, 0, 10);
+        if (!enbleItem.contains(position))
+            btn.setEnabled(false);
+        btn.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                listener.onClick(position, v);
+            }
+        });
         return btn;
     }
+
+    public interface OnClickListener
+    {
+        void onClick(int position, View v);
+    }
+
 }

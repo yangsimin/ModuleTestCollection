@@ -5,18 +5,25 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.GridView;
 import android.widget.TextView;
 
 import com.example.administrator.myapplication.R;
 import com.example.administrator.myapplication.adapter.GridViewAdapter;
+import com.example.administrator.myapplication.model.PMCCheck;
 import com.example.administrator.myapplication.utils.Contants;
+import com.example.administrator.myapplication.utils.PMCCheckUtil;
+import com.example.administrator.myapplication.widget.MyGridView;
+
+import org.xmlpull.v1.XmlPullParserException;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity
 {
 
-    private GridView gvMain;
+    private MyGridView gvMain;
 
     private GridViewAdapter gridViewAdapter;
 
@@ -24,22 +31,22 @@ public class MainActivity extends AppCompatActivity
 
     private boolean beginAll;
 
+    private List<Integer> enableItem;
+
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        gvMain = (GridView) findViewById(R.id.main_gv);
+        gvMain = (MyGridView) findViewById(R.id.main_gv);
 
-        gridViewAdapter = new GridViewAdapter(this, Contants.ITEMS);
-        gvMain.setAdapter(gridViewAdapter);
+        testFilter();
 
-        //设置按键监听
-        gvMain.setOnItemClickListener(new AdapterView.OnItemClickListener()
+        gridViewAdapter = new GridViewAdapter(this, Contants.ITEMS, enableItem, new GridViewAdapter.OnClickListener()
         {
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id)
+            public void onClick(int position, View v)
             {
                 if (position == Contants.ITEMS.length - 1)
                 {
@@ -51,6 +58,31 @@ public class MainActivity extends AppCompatActivity
                 }
             }
         });
+        gvMain.setAdapter(gridViewAdapter);
+    }
+
+    private void testFilter()
+    {
+        enableItem = new ArrayList<>();
+        try
+        {
+            List<PMCCheck.Result> results = PMCCheckUtil.newInstance(this).getResults();
+            for (int i = 0; i < results.size(); i++)
+            {
+                String name = results.get(i).getItemName();
+                for (int j = 0; j < Contants.ITEMS.length; j++)
+                {
+                    if (Contants.ITEMS[j].equals(name)) enableItem.add(j);
+                }
+            }
+
+        } catch (IOException e)
+        {
+            e.printStackTrace();
+        } catch (XmlPullParserException e)
+        {
+            e.printStackTrace();
+        }
     }
 
     @Override

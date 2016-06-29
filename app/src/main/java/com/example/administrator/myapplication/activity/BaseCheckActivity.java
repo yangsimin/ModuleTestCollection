@@ -15,9 +15,13 @@ import com.example.administrator.myapplication.fragment.BlueToothTestFragment;
 import com.example.administrator.myapplication.fragment.CheckTimeFragment;
 import com.example.administrator.myapplication.fragment.GPRSTestFragment;
 import com.example.administrator.myapplication.fragment.GPSTestFragment;
+import com.example.administrator.myapplication.fragment.InfraredTestFragment;
 import com.example.administrator.myapplication.fragment.KeyPressTestFragment;
+import com.example.administrator.myapplication.fragment.LaserInfraredTestFragment;
 import com.example.administrator.myapplication.fragment.OnlyTextViewFragment;
+import com.example.administrator.myapplication.fragment.PMCCheckFragment;
 import com.example.administrator.myapplication.fragment.SDCardTestFragment;
+import com.example.administrator.myapplication.fragment.SafeUnitTestFragment;
 import com.example.administrator.myapplication.fragment.SleepTestFragment;
 import com.example.administrator.myapplication.fragment.SoundTestFragment;
 import com.example.administrator.myapplication.fragment.VibratorTestFragment;
@@ -70,7 +74,7 @@ public class BaseCheckActivity extends AppCompatActivity implements View.OnClick
                 break;
             case 4:
                 fragment = new BlueToothTestFragment();
-                btnLayout.setVisibility(View.GONE);
+//                btnLayout.setVisibility(View.GONE);
                 break;
             case 5:
                 fragment = new GPRSTestFragment();
@@ -89,6 +93,22 @@ public class BaseCheckActivity extends AppCompatActivity implements View.OnClick
                 break;
             case 9:
                 fragment = new SleepTestFragment();
+                break;
+            case 10:
+                fragment = new LaserInfraredTestFragment();
+                btnLayout.setVisibility(View.GONE);
+                break;
+            case 11:
+                fragment = new InfraredTestFragment();
+                btnLayout.setVisibility(View.GONE);
+                break;
+            case 12:
+                fragment = new SafeUnitTestFragment();
+                btnLayout.setVisibility(View.GONE);
+                break;
+            case 13:
+                fragment = new PMCCheckFragment();
+                btnLayout.setVisibility(View.GONE);
                 break;
             default:
                 fragment = new OnlyTextViewFragment();

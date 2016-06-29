@@ -247,6 +247,9 @@ public class BlueToothTestFragment extends BaseFragment
             btAction.setText("数据传输完成");
             btSearching.setVisibility(View.GONE);
             mOutputStream.close();
+
+            getActivity().setResult(Contants.RESULT_WELL);
+            MethodCollection.delayFinish(getActivity(), 1000);
         }
     }
 
