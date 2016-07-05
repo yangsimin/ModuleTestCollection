@@ -1,11 +1,14 @@
 package com.example.administrator.myapplication.adapter;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
+
+import com.example.administrator.myapplication.utils.Constants;
 
 import java.util.List;
 
@@ -20,15 +23,18 @@ public class GridViewAdapter extends BaseAdapter
 
     private List<Integer> enbleItem;
 
+    private List<Boolean> booItem;
+
     private OnClickListener listener;
 
     public GridViewAdapter(Context context, String[] items,
-                           List<Integer> enableItem, OnClickListener listener)
+                           List<Integer> enableItem, List<Boolean> booItem, OnClickListener listener)
     {
         this.context = context;
         this.items = items;
         this.enbleItem = enableItem;
         this.listener = listener;
+        this.booItem = booItem;
     }
 
     @Override
@@ -62,12 +68,13 @@ public class GridViewAdapter extends BaseAdapter
             btn = (Button) convertView;
         }
         btn.setText(getItem(position));
-//        btn.setTextColor(Color.BLACK);
         btn.setGravity(Gravity.CENTER);
-//        btn.setBackground(context.getResources().getDrawable(R.drawable.selector_btn));
         btn.setPadding(0, 10, 0, 10);
-        if (!enbleItem.contains(position))
-            btn.setEnabled(false);
+        if (Constants.useFilter)
+        {
+            if (!enbleItem.contains(position)) btn.setEnabled(false);
+            else if (booItem.get(enbleItem.indexOf(position))) btn.setTextColor(Color.parseColor("#238E23"));
+        }
         btn.setOnClickListener(new View.OnClickListener()
         {
             @Override

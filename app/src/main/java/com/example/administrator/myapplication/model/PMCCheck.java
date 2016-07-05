@@ -28,7 +28,7 @@ public class PMCCheck
                     ", itemResult='" + itemResult + '\n' +
                     ", itemTestTime='" + itemTestTime + '\n' +
                     ", itemWellCount='" + itemWellCount + '\n' +
-                    ", itemBadTCount='" + itemBadTCount + '\n' +
+                    ", itemBadCount='" + itemBadCount + '\n' +
                     '}';
         }
 
@@ -38,7 +38,7 @@ public class PMCCheck
         private String itemResult;
         private String itemTestTime;
         private String itemWellCount;
-        private String itemBadTCount;
+        private String itemBadCount;
 
         public String getItemId()
         {
@@ -100,14 +100,14 @@ public class PMCCheck
             this.itemWellCount = itemWellCount;
         }
 
-        public String getItemBadTCount()
+        public String getItemBadCount()
         {
-            return itemBadTCount;
+            return itemBadCount;
         }
 
-        public void setItemBadTCount(String itemBadTCount)
+        public void setItemBadCount(String itemBadCount)
         {
-            this.itemBadTCount = itemBadTCount;
+            this.itemBadCount = itemBadCount;
         }
     }
 

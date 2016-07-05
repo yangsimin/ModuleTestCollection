@@ -27,7 +27,9 @@ public class PMCCheckUtil
 {
     private static PMCCheck pmcCheckInstance;
 
-    public static PMCCheck newInstance(Context context) throws IOException, XmlPullParserException
+    private static final String strAddress = "/sdcard/";
+
+    public static PMCCheck getInstance(Context context) throws IOException, XmlPullParserException
     {
         if (pmcCheckInstance == null)
         {
@@ -41,7 +43,9 @@ public class PMCCheckUtil
         XmlPullParserFactory factory = XmlPullParserFactory.newInstance();
         XmlPullParser xpp = factory.newPullParser();
 //        InputStream inStream = context.getAssets().open("PMCCheck.sys");
-        InputStream inStream = new FileInputStream(new File(Environment.getExternalStorageDirectory(), "PMCCheck.sys"));
+//        InputStream inStream = new FileInputStream(new File(Environment.getExternalStorageDirectory(), "PMCCheck.sys"));
+        InputStream inStream = new FileInputStream(new File(strAddress, "PMCCheck.sys"));
+        Log.d("address", Environment.getExternalStorageDirectory().toString());
         xpp.setInput(inStream, "UTF-8");
 
         int eventType = xpp.getEventType();
@@ -109,7 +113,7 @@ public class PMCCheckUtil
                     }
                     else if ("检测失败次数".equals(stName))
                     {
-                        result.setItemBadTCount(xpp.nextText());
+                        result.setItemBadCount(xpp.nextText());
                     }
                     else if ("配置集".equals(stName))
                     {
@@ -143,7 +147,8 @@ public class PMCCheckUtil
 
     public static void serializer(PMCCheck pmcCheck) throws IOException
     {
-        OutputStream outStream = new FileOutputStream(new File(Environment.getExternalStorageDirectory(), "PMCCheck.sys"));
+//        OutputStream outStream = new FileOutputStream(new File(Environment.getExternalStorageDirectory(), "PMCCheck.sys"));
+        OutputStream outStream = new FileOutputStream(new File(strAddress, "PMCCheck.sys"));
         XmlSerializer serializer = Xml.newSerializer();
         serializer.setOutput(outStream, "UTF-8");
         serializer.startDocument("UTF-8", true);
@@ -165,7 +170,7 @@ public class PMCCheckUtil
             setTextByTag(serializer, "检测项结果", result.getItemResult());
             setTextByTag(serializer, "检测时间", result.getItemTestTime());
             setTextByTag(serializer, "检测成功次数", result.getItemWellCount());
-            setTextByTag(serializer, "检测失败次数", result.getItemBadTCount());
+            setTextByTag(serializer, "检测失败次数", result.getItemBadCount());
             serializer.endTag(null, "检测结果集");
         }
 
@@ -174,7 +179,8 @@ public class PMCCheckUtil
             PMCCheck.Setting setting = pmcCheck.getSettings().get(i);
             serializer.startTag(null, "配置集");
             setTextByTag(serializer, "配置名称", setting.getName());
-            setTextByTag(serializer, "配置值", setting.getValue());
+            if (setting.getValue() != null)
+                setTextByTag(serializer, "配置值", setting.getValue());
             serializer.endTag(null, "配置集");
         }
 

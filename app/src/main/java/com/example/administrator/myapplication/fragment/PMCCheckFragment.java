@@ -27,11 +27,12 @@ public class PMCCheckFragment extends BaseFragment
     {
         try
         {
+            PMCCheckUtil.serializer(PMCCheckUtil.getInstance(getActivity()));
+            Log.d("pmc", "写入成功");
+
             PMCCheck pmcCheck = PMCCheckUtil.parser(getActivity());
             String str = pmcCheck.toString();
             Log.d("pmc", str);
-
-            PMCCheckUtil.serializer(pmcCheck);
 
         } catch (IOException e)
         {

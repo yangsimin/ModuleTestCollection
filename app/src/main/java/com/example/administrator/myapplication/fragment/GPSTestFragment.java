@@ -8,7 +8,7 @@ import com.baidu.location.LocationClient;
 import com.baidu.location.LocationClientOption;
 import com.example.administrator.myapplication.R;
 import com.example.administrator.myapplication.base.BaseFragment;
-import com.example.administrator.myapplication.utils.Contants;
+import com.example.administrator.myapplication.utils.Constants;
 import com.example.administrator.myapplication.utils.MethodCollection;
 
 /**
@@ -85,13 +85,13 @@ public class GPSTestFragment extends BaseFragment
             }
             else
             {
-                gpsState.setText("GPS已开启，但无法定位");
-                getActivity().setResult(Contants.RESULT_BAD);
+                gpsState.setText("GPS已开启，但无法定位，请到空旷地方测试。");
+                getActivity().setResult(Constants.RESULT_BAD);
                 return;
             }
             String msg = sb.toString();
             gpsState.setText(msg);
-            getActivity().setResult(Contants.RESULT_WELL);
+            getActivity().setResult(Constants.RESULT_WELL);
         }
     };
     private LocationClient client;

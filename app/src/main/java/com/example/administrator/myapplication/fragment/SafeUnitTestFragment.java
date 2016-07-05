@@ -15,7 +15,7 @@ import android.widget.SpinnerAdapter;
 
 import com.example.administrator.myapplication.R;
 import com.example.administrator.myapplication.base.BaseFragment;
-import com.example.administrator.myapplication.utils.Contants;
+import com.example.administrator.myapplication.utils.Constants;
 import com.keymantek.serialport.utils.HexUtils;
 import com.keymantek.serialport.utils.SerialPortOpera;
 
@@ -68,7 +68,7 @@ public class SafeUnitTestFragment extends BaseFragment implements View.OnClickLi
             if (cbSend.isChecked())
                 mSerialPortOpera.SerialPortWrite(HexUtils.hexStringToByte(data));
             else mSerialPortOpera.SerialPortWrite(data.getBytes());
-            handler.postDelayed(this, 1000);
+            if (isAuto) handler.postDelayed(this, 1000);
         }
     };
 
@@ -171,12 +171,7 @@ public class SafeUnitTestFragment extends BaseFragment implements View.OnClickLi
             case R.id.send:
                 //发送数据
                 //获取编辑框内容
-                String data = etSend.getText().toString().trim();
-                //若输入的内容为十六进制
-                if (cbSend.isChecked())
-                    mSerialPortOpera.SerialPortWrite(HexUtils.hexStringToByte(data));
-                    //若不是
-                else mSerialPortOpera.SerialPortWrite(data.getBytes());
+                handler.post(runnable);
                 break;
             case R.id.autosend:
                 isAuto = !isAuto;
@@ -231,11 +226,11 @@ public class SafeUnitTestFragment extends BaseFragment implements View.OnClickLi
                 builder.create().show();
                 break;
             case R.id.well:
-                getActivity().setResult(Contants.RESULT_WELL);
+                getActivity().setResult(Constants.RESULT_WELL);
                 getActivity().finish();
                 break;
             case R.id.bad:
-                getActivity().setResult(Contants.RESULT_BAD);
+                getActivity().setResult(Constants.RESULT_BAD);
                 getActivity().finish();
                 break;
             case R.id.business_btn:

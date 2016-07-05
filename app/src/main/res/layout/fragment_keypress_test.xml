@@ -61,6 +61,6 @@
         android:layout_above="@id/btn_bad"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="请按下屏幕右侧实体按键，若有坏，点“不合格"
+        android:text="按下屏幕右侧实体按键检测，“Home键”和“电源键”请人工优先判断"
         android:layout_marginBottom="10dp"/>
 </RelativeLayout>

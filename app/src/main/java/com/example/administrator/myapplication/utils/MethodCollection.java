@@ -37,12 +37,13 @@ public class MethodCollection
     };
 
     //获取当前时间
-    public static String getCurTime()
+    public static String getCurTime(String pattern)
     {
         Date date = new Date();
-        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd  HH:mm:ss");
-        String time = format.format(date);
-        return time;
+//        SimpleDateFormat format = new SimpleDateFormat(pattern);
+        SimpleDateFormat format = (SimpleDateFormat) SimpleDateFormat.getInstance();
+        format.applyPattern(pattern);
+        return format.format(date);
     }
 
     //震动一次
@@ -96,6 +97,7 @@ public class MethodCollection
     //判断是否可以写
     public static boolean checkSDcardWritable(String dir)
     {
+        Log.d("sdcard", dir);
         if (dir == null) return false;
         File directory = new File(dir);
         if (!directory.isDirectory())
@@ -137,9 +139,11 @@ public class MethodCollection
 
     public static boolean writeToSD(String msg, Context context)
     {
+//        File file = new File("/storage/sdcard1/Android/data/com.example.administrator.myapplication/", "test.txt");
         File file = new File("/storage/sdcard1/", "test.txt");
 //        File file = new File(Environment.getExternalStorageDirectory().getPath(), "test.txt");
 //        File file = new File("/mnt/sdcard2/", "text.txt");
+        Log.d("sdcard", file.getPath());
         FileOutputStream fos;
 
         try

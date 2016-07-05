@@ -3,7 +3,7 @@ package com.example.administrator.myapplication.utils;
 /**
  * Created by Administrator on 2016/6/15 0015.
  */
-public class Contants
+public class Constants
 {
     public static final int RESULT_WELL = 1;
 
@@ -18,13 +18,18 @@ public class Contants
             "GPRS",
             "GPS",
             "按键",
-            "喇叭",
+            "音频",
             "休眠测试",
             "激光红外",
             "普通红外",
             "安全模块",
-            "PMCCheck",
+            "NFC",
+            "多点触碰",
+            "触屏测试",
+//            "PMCCheck",
             "开始",
 //            "退出",
     };
+
+    public static final boolean useFilter = true;
 }

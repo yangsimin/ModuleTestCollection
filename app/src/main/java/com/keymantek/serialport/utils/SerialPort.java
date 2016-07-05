@@ -9,10 +9,10 @@ import java.io.InputStream;
 import java.io.OutputStream;
 
 /**
- * ´®¿Ú±¾µØ´úÂëµÄµ÷ÓÃ
- * open£º´ò¿ª´®¿Ú£¬·µ»ØÒ»¸öfaildescription
- * close£º¹Ø±Õ´®¿Ú
- * @author Âæ½õ½­
+ * ä¸²å£æœ¬åœ°ä»£ç çš„è°ƒç”¨
+ * openï¼šæ‰“å¼€ä¸²å£ï¼Œè¿”å›ä¸€ä¸ªfaildescription
+ * closeï¼šå…³é—­ä¸²å£
+ * @author éª†é”¦æ±Ÿ
  *
  */
 public class SerialPort {
@@ -68,13 +68,13 @@ public class SerialPort {
 	public void closeSerialport(int type){
 		close(type);
 	}
-	// JNI´ò¿ª´®¿Ú²Ù×÷
+	// JNIæ‰“å¼€ä¸²å£æ“ä½œ
 	private native static FileDescriptor open(String path, int baudrate,int nBits, char nEvent, int nStop, int type);
-	//JNI¹Ø±Õ´®¿Ú²Ù×÷
+	//JNIå…³é—­ä¸²å£æ“ä½œ
 	private native static void close(int nType);
 	
 
-	//¼ÓÔØ±¾µØ.soÀà¿â
+	//åŠ è½½æœ¬åœ°.soç±»åº“
 	static {
 		System.loadLibrary("serial_port");
 	}

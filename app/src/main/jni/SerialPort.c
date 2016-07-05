@@ -119,7 +119,6 @@ int sri_IOCTLSRI(unsigned int name,unsigned int value)
 		}
 		else
 		{
-
 			struct Data dta;
 			dta.name=name;
 			dta.value=value;
@@ -207,15 +206,15 @@ jobject Java_com_keymantek_serialport_utils_SerialPort_open
                         sri_IOCTLSRI(100,1);
                         sri_IOCTLSRI(128,0);
                         sri_IOCTLSRI(78,1);
-                    break;
+                        break;
                     case 1://普通
                         sri_IOCTLSRI(96,1);
                         sri_IOCTLSRI(99,1);
                         sri_IOCTLSRI(100,0);
                         sri_IOCTLSRI(128,0);
                         sri_IOCTLSRI(78,1);
-                    break;
-                    case 2:
+                        break;
+                    case 2://安全模块
                         sri_IOCTLSRI(96,1);
                         sri_IOCTLSRI(97,1);
                         sri_IOCTLSRI(42,0);
@@ -225,7 +224,7 @@ jobject Java_com_keymantek_serialport_utils_SerialPort_open
                         sri_IOCTLSRI(127,0);
                         sleep(0.01);
                         sri_IOCTLSRI(127,1);
-                    break;
+                        break;
                }
         		//sri_IOCTLSRI(96,1);
         		//sri_IOCTLSRI(99,0);
@@ -297,20 +296,23 @@ void Java_com_keymantek_serialport_utils_SerialPort_close
   (JNIEnv *env, jobject thiz, jint type)
 {
     switch(type){
+        //激光红外
         case 0:
             sri_IOCTLSRI(78,0);
             sri_IOCTLSRI(128,1);
             sri_IOCTLSRI(100,0);
-            sri_IOCTLSRI(99,1);
-            sri_IOCTLSRI(96,0);
-            break;
-        case 1:
-            sri_IOCTLSRI(78,0);
-            sri_IOCTLSRI(128,1);
-            sri_IOCTLSRI(100,1);
             sri_IOCTLSRI(99,0);
             sri_IOCTLSRI(96,0);
             break;
+        //普通红外
+        case 1:
+            sri_IOCTLSRI(78,0);
+            sri_IOCTLSRI(128,1);
+            sri_IOCTLSRI(100,0);
+            sri_IOCTLSRI(99,0);
+            sri_IOCTLSRI(96,0);
+            break;
+        //安全模块
         case 2:
             sri_IOCTLSRI(127,0);
             sri_IOCTLSRI(44,0);
@@ -319,9 +321,4 @@ void Java_com_keymantek_serialport_utils_SerialPort_close
             sri_IOCTLSRI(96,0);
         break;
     }
-	//sri_IOCTLSRI(78,0);
-	//sri_IOCTLSRI(128,1);
-	//sri_IOCTLSRI(100,0);
-	//sri_IOCTLSRI(99,1);
-	//sri_IOCTLSRI(96,0);
 }

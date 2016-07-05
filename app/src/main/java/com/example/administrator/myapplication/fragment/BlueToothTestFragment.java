@@ -16,7 +16,7 @@ import com.example.administrator.myapplication.R;
 import com.example.administrator.myapplication.adapter.BlueToothDeviceAdapter;
 import com.example.administrator.myapplication.base.BaseFragment;
 import com.example.administrator.myapplication.utils.ClsUtils;
-import com.example.administrator.myapplication.utils.Contants;
+import com.example.administrator.myapplication.utils.Constants;
 import com.example.administrator.myapplication.utils.MethodCollection;
 
 import java.io.IOException;
@@ -30,7 +30,7 @@ import java.util.UUID;
  */
 public class BlueToothTestFragment extends BaseFragment
 {
-    private TextView btAction;
+    private TextView btAction, btState;
     private BluetoothReceiver searchReceiver;
 
     private ProgressBar btSearching;
@@ -54,6 +54,7 @@ public class BlueToothTestFragment extends BaseFragment
     @Override
     protected void initViews()
     {
+        btState = (TextView) rootView.findViewById(R.id.bluetooth_state_tv);
         btAction = (TextView) rootView.findViewById(R.id.bluetooth_action_tv);
         btSearching = (ProgressBar) rootView.findViewById(R.id.bluetooth_searching_pb);
         lvDevices = (ListView) rootView.findViewById(R.id.bluetooth_devices_lv);
@@ -62,61 +63,57 @@ public class BlueToothTestFragment extends BaseFragment
     @Override
     protected void initData()
     {
-        if (!MethodCollection.isBlueToothAvailable())
-        {
-            btAction.setText("蓝牙关闭或没有蓝牙");
-            getActivity().setResult(Contants.RESULT_BAD);
-            MethodCollection.delayFinish(getActivity(), 1000);
-        } else
-        {
-            //获取蓝牙设备
-            bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
-            //打开蓝牙设备
-            if (!bluetoothAdapter.isEnabled()) bluetoothAdapter.enable();
+        //获取蓝牙设备
+        bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
 
-            //注册搜索广播
-            searchReceiver = new BluetoothReceiver();
-            IntentFilter searchFilter = new IntentFilter();
-            searchFilter.addAction(BluetoothAdapter.ACTION_DISCOVERY_STARTED);
-            searchFilter.addAction(BluetoothDevice.ACTION_FOUND);
-            searchFilter.addAction(BluetoothAdapter.ACTION_DISCOVERY_FINISHED);
-            getActivity().registerReceiver(searchReceiver, searchFilter);
+        //注册搜索广播
+        searchReceiver = new BluetoothReceiver();
+        IntentFilter searchFilter = new IntentFilter();
+        searchFilter.addAction(BluetoothAdapter.ACTION_DISCOVERY_STARTED);
+        searchFilter.addAction(BluetoothDevice.ACTION_FOUND);
+        searchFilter.addAction(BluetoothAdapter.ACTION_DISCOVERY_FINISHED);
+        searchFilter.addAction(BluetoothAdapter.ACTION_STATE_CHANGED);
+        getActivity().registerReceiver(searchReceiver, searchFilter);
 
-            //注册配对广播
-            paringReceiver = new ParingReceived();
-            IntentFilter paringFilter = new IntentFilter();
-            paringFilter.addAction(BluetoothDevice.ACTION_PAIRING_REQUEST);
-            paringFilter.addAction(BluetoothDevice.ACTION_BOND_STATE_CHANGED);
+        //注册配对广播
+        paringReceiver = new ParingReceived();
+        IntentFilter paringFilter = new IntentFilter();
+        paringFilter.addAction(BluetoothDevice.ACTION_PAIRING_REQUEST);
+        paringFilter.addAction(BluetoothDevice.ACTION_BOND_STATE_CHANGED);
 //            paringFilter.setPriority(Integer.MAX_VALUE);
-            getActivity().registerReceiver(paringReceiver, paringFilter);
+        getActivity().registerReceiver(paringReceiver, paringFilter);
 
-            //开始搜索
-            bluetoothAdapter.startDiscovery();
-
-            devices = new ArrayList<>();
-            adapter = new BlueToothDeviceAdapter(getActivity(), devices, new BlueToothDeviceAdapter.onDeviceClickListener()
-            {
-                @Override
-                public void onClick(BluetoothDevice device)
-                {
-                    try
-                    {
-                        //若被点击，终止搜索
-                        bluetoothAdapter.cancelDiscovery();
-                        //若已配对，开始传输
-                        if (BluetoothDevice.BOND_BONDED == device.getBondState()) connect(device);
-                            //建立配对
-                        else device.createBond();
-
-                    } catch (Exception e)
-                    {
-                        e.printStackTrace();
-                    }
-                }
-            });
-
-            lvDevices.setAdapter(adapter);
+        if (!bluetoothAdapter.isEnabled()) bluetoothAdapter.enable();
+        else
+        {
+            btState.setText("蓝牙：打开");
+            bluetoothAdapter.startDiscovery();//开始搜索
         }
+
+        devices = new ArrayList<>();
+        adapter = new BlueToothDeviceAdapter(getActivity(), devices, new BlueToothDeviceAdapter.onDeviceClickListener()
+        {
+            @Override
+            public void onClick(BluetoothDevice device)
+            {
+                try
+                {
+                    //若被点击，终止搜索
+                    bluetoothAdapter.cancelDiscovery();
+                    //若已配对，开始传输
+                    if (BluetoothDevice.BOND_BONDED == device.getBondState()) connect(device);
+                        //建立配对
+                    else device.createBond();
+
+                } catch (Exception e)
+                {
+                    e.printStackTrace();
+                }
+            }
+        });
+
+        lvDevices.setAdapter(adapter);
+
     }
 
     /**
@@ -133,6 +130,15 @@ public class BlueToothTestFragment extends BaseFragment
                 //开始搜索
                 btAction.setText("开始搜索蓝牙设备...");
                 btSearching.setVisibility(View.VISIBLE);
+            }
+            if (BluetoothAdapter.ACTION_STATE_CHANGED.equals(action))
+            {
+                if (bluetoothAdapter.isEnabled())
+                {
+                    btState.setText("蓝牙：打开");
+                    bluetoothAdapter.startDiscovery();
+                }
+                else btState.setText("蓝牙：关闭");
             }
             if (BluetoothDevice.ACTION_FOUND.equals(action))
             {
@@ -152,7 +158,7 @@ public class BlueToothTestFragment extends BaseFragment
                     //若还没配对，则开始配对
                     if (device.getBondState() != BluetoothDevice.BOND_BONDED) device.createBond();
 
-                    //若已经配对，则开始传输
+                        //若已经配对，则开始传输
                     else try
                     {
                         connect(device);
@@ -242,13 +248,13 @@ public class BlueToothTestFragment extends BaseFragment
             btAction.setText("正在传输数据");
             btSearching.setVisibility(View.VISIBLE);
             OutputStream mOutputStream = mSocket.getOutputStream();
-            mOutputStream.write("hello world\n".getBytes());
+            mOutputStream.write("successful~\n".getBytes());
             mOutputStream.flush();
             btAction.setText("数据传输完成");
             btSearching.setVisibility(View.GONE);
             mOutputStream.close();
-
-            getActivity().setResult(Contants.RESULT_WELL);
+            bluetoothAdapter.disable();
+            getActivity().setResult(Constants.RESULT_WELL);
             MethodCollection.delayFinish(getActivity(), 1000);
         }
     }
@@ -267,6 +273,7 @@ public class BlueToothTestFragment extends BaseFragment
         }
         if (bluetoothAdapter != null)
         {
+            bluetoothAdapter.disable();
             bluetoothAdapter.cancelDiscovery();
         }
     }

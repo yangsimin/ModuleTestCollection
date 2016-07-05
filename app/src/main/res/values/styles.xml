@@ -8,4 +8,14 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="TextStyle">
+        <item name="android:gravity">center</item>
+        <item name="android:layout_columnSpan">1</item>
+        <item name="android:layout_rowWeight">1</item>
+        <item name="android:layout_columnWeight">1</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:layout_gravity">fill</item>
+        <item name="background">@drawable/shape_btn</item>
+    </style>
+
 </resources>

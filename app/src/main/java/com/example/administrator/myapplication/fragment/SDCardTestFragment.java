@@ -4,7 +4,7 @@ import android.widget.TextView;
 
 import com.example.administrator.myapplication.R;
 import com.example.administrator.myapplication.base.BaseFragment;
-import com.example.administrator.myapplication.utils.Contants;
+import com.example.administrator.myapplication.utils.Constants;
 import com.example.administrator.myapplication.utils.MethodCollection;
 
 /**
@@ -13,6 +13,8 @@ import com.example.administrator.myapplication.utils.MethodCollection;
 public class SDCardTestFragment extends BaseFragment
 {
     private TextView tvSDCard;
+
+    private static final int READ_EXTERNAL_STORAGE_REQUEST_CODE = 1;
 
     @Override
     public int getLayout()
@@ -30,16 +32,17 @@ public class SDCardTestFragment extends BaseFragment
     protected void initData()
     {
         if (MethodCollection.writeToSD("hello world", getActivity()))
+//        checkPermission();
+//        if (MethodCollection.checkSDcardWritable("storage/sdcard1/Android/data/com.example.administrator.myapplication/"))
         {
             tvSDCard.setText("SD卡状态：可用");
-            getActivity().setResult(Contants.RESULT_WELL);
+            getActivity().setResult(Constants.RESULT_WELL);
         }
         else
         {
             tvSDCard.setText("SD卡状态：不可用");
-            getActivity().setResult(Contants.RESULT_BAD);
+            getActivity().setResult(Constants.RESULT_BAD);
         }
-
         MethodCollection.delayFinish(getActivity(), 1000);
     }
 }

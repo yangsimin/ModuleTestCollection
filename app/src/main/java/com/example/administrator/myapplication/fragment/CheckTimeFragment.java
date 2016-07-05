@@ -21,7 +21,8 @@ public class CheckTimeFragment extends BaseFragment
         public void handleMessage(Message msg)
         {
             super.handleMessage(msg);
-            tvTime.setText(MethodCollection.getCurTime());
+            tvTime.setText(MethodCollection.getCurTime("yyyy-MM-dd  HH:mm:ss"));
+//            tvTime.setText(MethodCollection.getCurTime("yyyy-MM-dd'T'HH:mm:ssZZZZZ"));
             if (isRunning)
             {
                 handler.sendEmptyMessageDelayed(0, 1000);

@@ -8,7 +8,7 @@ import android.widget.ImageButton;
 
 import com.example.administrator.myapplication.R;
 import com.example.administrator.myapplication.base.BaseFragment;
-import com.example.administrator.myapplication.utils.Contants;
+import com.example.administrator.myapplication.utils.Constants;
 
 /**
  * Created by Administrator on 2016/6/20 0020.
@@ -49,7 +49,7 @@ public class KeyPressTestFragment extends BaseFragment
             @Override
             public void onClick(View v)
             {
-                getActivity().setResult(Contants.RESULT_BAD);
+                getActivity().setResult(Constants.RESULT_BAD);
                 getActivity().finish();
             }
         });
@@ -84,7 +84,7 @@ public class KeyPressTestFragment extends BaseFragment
 
         if (blUp & blOk & blDown & blLeft)
         {
-            getActivity().setResult(Contants.RESULT_WELL);
+            getActivity().setResult(Constants.RESULT_WELL);
             getActivity().finish();
         }
     }
