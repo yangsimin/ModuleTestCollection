@@ -5,6 +5,7 @@ import android.nfc.NfcAdapter;
 import android.nfc.Tag;
 import android.nfc.tech.MifareClassic;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.administrator.myapplication.R;
 import com.example.administrator.myapplication.base.BaseFragment;
@@ -52,7 +53,8 @@ public class NFCTestFragment extends BaseFragment
         //得到是否检测到ACTION_TECH_DISCOVERED触发
         if (NfcAdapter.ACTION_TECH_DISCOVERED.equals(getActivity().getIntent().getAction())) {
             //处理该intent
-            processIntent(getActivity().getIntent());
+//            processIntent(getActivity().getIntent());
+            Toast.makeText(getActivity(), "检测到了", Toast.LENGTH_SHORT).show();
         }
     }
 

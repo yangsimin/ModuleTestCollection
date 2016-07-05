@@ -1,5 +1,7 @@
 package com.example.administrator.myapplication.model;
 
+import java.util.List;
+
 /**
  * Created by Administrator on 2016/7/4 0004.
  */
@@ -8,6 +10,43 @@ public class DevInfo
     private String SN;
     private String DeviceID;
     private String HardVersion;
+    private List<Functions> functionsList;
+
+    public class Functions
+    {
+        private String Code;
+        private String Value;
+
+        public String getCode()
+        {
+            return Code;
+        }
+
+        public void setCode(String code)
+        {
+            Code = code;
+        }
+
+        public String getValue()
+        {
+            return Value;
+        }
+
+        public void setValue(String value)
+        {
+            Value = value;
+        }
+    }
+
+    public List<Functions> getFunctionsList()
+    {
+        return functionsList;
+    }
+
+    public void setFunctionsList(List<Functions> functionsList)
+    {
+        this.functionsList = functionsList;
+    }
 
     public String getSN()
     {

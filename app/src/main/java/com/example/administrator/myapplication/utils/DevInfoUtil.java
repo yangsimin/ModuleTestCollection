@@ -16,6 +16,7 @@ import java.io.InputStream;
 import java.security.InvalidAlgorithmParameterException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
+import java.util.ArrayList;
 
 import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
@@ -55,12 +56,14 @@ public class DevInfoUtil
 
         int eventType = xpp.getEventType();
         DevInfo devInfo = null;
+        DevInfo.Functions functions= null;
         while (eventType != XmlPullParser.END_DOCUMENT)
         {
             switch (eventType)
             {
                 case XmlPullParser.START_DOCUMENT:
                     devInfo = new DevInfo();
+                    devInfo.setFunctionsList(new ArrayList<DevInfo.Functions>());
                     break;
                 case XmlPullParser.START_TAG:
                     String stName = xpp.getName();
@@ -73,6 +76,22 @@ public class DevInfoUtil
                     } else if ("HardVersion".equals(stName))
                     {
                         devInfo.setHardVersion(xpp.nextText());
+                    } else if ("Functions".equals(stName))
+                    {
+                        functions = devInfo.new Functions();
+                    } else if ("Code".equals(stName))
+                    {
+                        functions.setCode(xpp.nextText());
+                    } else if ("Value".equals(stName))
+                    {
+                        functions.setValue(xpp.nextText());
+                    }
+                    break;
+                case XmlPullParser.END_TAG:
+                    String etName = xpp.getName();
+                    if ("Functions".equals(etName))
+                    {
+                        devInfo.getFunctionsList().add(functions);
                     }
                     break;
             }

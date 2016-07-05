@@ -29,6 +29,8 @@ public class PMCCheckUtil
 
     private static final String strAddress = "/sdcard/";
 
+    private static String enter = System.getProperty("line.separator");//换行
+
     public static PMCCheck getInstance(Context context) throws IOException, XmlPullParserException
     {
         if (pmcCheckInstance == null)
@@ -151,9 +153,9 @@ public class PMCCheckUtil
         OutputStream outStream = new FileOutputStream(new File(strAddress, "PMCCheck.sys"));
         XmlSerializer serializer = Xml.newSerializer();
         serializer.setOutput(outStream, "UTF-8");
-        serializer.startDocument("UTF-8", true);
-        serializer.startTag("http://www.w3.org/2001/XMLSchema-instance", "设备检测信息");
-
+        serializer.startDocument("utf-8", null);
+        serializer.startTag(null, "设备检测信息");
+        serializer.text(enter);
         setTextByTag(serializer, "设备唯一标识", pmcCheck.getId());
         setTextByTag(serializer, "设置序列号时间", pmcCheck.getSerialTime());
         setTextByTag(serializer, "序列号", pmcCheck.getSerialNum());
@@ -164,6 +166,7 @@ public class PMCCheckUtil
         {
             PMCCheck.Result result = pmcCheck.getResults().get(i);
             serializer.startTag(null, "检测结果集");
+            serializer.text(enter);
             setTextByTag(serializer, "检测项唯一标识", result.getItemId());
             setTextByTag(serializer, "检测项名称", result.getItemName());
             setTextByTag(serializer, "检测项编码", result.getItemNum());
@@ -172,19 +175,22 @@ public class PMCCheckUtil
             setTextByTag(serializer, "检测成功次数", result.getItemWellCount());
             setTextByTag(serializer, "检测失败次数", result.getItemBadCount());
             serializer.endTag(null, "检测结果集");
+            serializer.text(enter);
         }
 
         for (int i = 0; i < pmcCheck.getSettings().size(); i++)
         {
             PMCCheck.Setting setting = pmcCheck.getSettings().get(i);
             serializer.startTag(null, "配置集");
+            serializer.text(enter);
             setTextByTag(serializer, "配置名称", setting.getName());
             if (setting.getValue() != null)
                 setTextByTag(serializer, "配置值", setting.getValue());
             serializer.endTag(null, "配置集");
+            serializer.text(enter);
         }
 
-        serializer.endTag("http://www.w3.org/2001/XMLSchema-instance", "设备检测信息");
+        serializer.endTag(null, "设备检测信息");
         serializer.endDocument();
         serializer.flush();
         outStream.close();
@@ -196,5 +202,6 @@ public class PMCCheckUtil
         myser.startTag(null, tag);
         myser.text(text);
         myser.endTag(null, tag);
+        myser.text(enter);
     }
 }

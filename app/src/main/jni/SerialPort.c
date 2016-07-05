@@ -225,6 +225,13 @@ jobject Java_com_keymantek_serialport_utils_SerialPort_open
                         sleep(0.01);
                         sri_IOCTLSRI(127,1);
                         break;
+                    case 3://“ªŒ¨…®√Ë
+                        sri_IOCTLSRI(95,1);
+                        sri_IOCTLSRI(125,0);
+                        sri_IOCTLSRI(96,1);
+                        sri_IOCTLSRI(128,1);
+                        sri_IOCTLSRI(78,1);
+                        break;
                }
         		//sri_IOCTLSRI(96,1);
         		//sri_IOCTLSRI(99,0);
@@ -320,5 +327,12 @@ void Java_com_keymantek_serialport_utils_SerialPort_close
             sri_IOCTLSRI(97,0);
             sri_IOCTLSRI(96,0);
         break;
+        case 3://“ªŒ¨…®√Ë
+            sri_IOCTLSRI(95,0);
+            sri_IOCTLSRI(125,1);
+            sri_IOCTLSRI(96,0);
+            sri_IOCTLSRI(128,0);
+            sri_IOCTLSRI(78,0);
+            break;
     }
 }

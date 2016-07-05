@@ -27,6 +27,7 @@ public class Constants
             "多点触碰",
             "触屏测试",
 //            "PMCCheck",
+            "一维扫描",
             "开始",
 //            "退出",
     };

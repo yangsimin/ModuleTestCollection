@@ -25,6 +25,7 @@ import com.example.administrator.myapplication.fragment.SDCardTestFragment;
 import com.example.administrator.myapplication.fragment.SimpleInFrared;
 import com.example.administrator.myapplication.fragment.SimpleLaserInFrared;
 import com.example.administrator.myapplication.fragment.SimpleSafeUnit;
+import com.example.administrator.myapplication.fragment.SimpleScanTestFragment;
 import com.example.administrator.myapplication.fragment.SleepTestFragment;
 import com.example.administrator.myapplication.fragment.SoundTestFragment;
 import com.example.administrator.myapplication.fragment.TouchTestFragment;
@@ -146,6 +147,9 @@ public class BaseCheckActivity extends AppCompatActivity implements View.OnClick
             case 15:
                 fragment = new TouchTestFragment();
                 btnLayout.setVisibility(View.GONE);
+                break;
+            case 16:
+                fragment = new SimpleScanTestFragment();
                 break;
 //            case 16:
 //                fragment = new PMCCheckFragment();

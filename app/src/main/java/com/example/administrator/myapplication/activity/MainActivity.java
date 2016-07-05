@@ -108,6 +108,23 @@ public class MainActivity extends AppCompatActivity
                 showAlertDialog("错误", "设备唯一标识与文件不一样，无法检测");
             else
             {
+                //写入配置值
+                List<PMCCheck.Setting> settings = pmcCheck.getSettings();
+                List<DevInfo.Functions> functionsList = devInfo.getFunctionsList();
+                for (int i = 0; i < settings.size(); i++)
+                {
+                    PMCCheck.Setting setting = settings.get(i);
+                    for (int j = 0; j < functionsList.size(); j++)
+                    {
+                        DevInfo.Functions functions = functionsList.get(j);
+                        if (setting.getName().equals(functions.getCode()))
+                        {
+                            setting.setValue(functions.getValue());
+                        }
+                    }
+                }
+
+                pmcCheck.setSettings(settings);
                 pmcCheck.setSerialNum(devInfo.getSN());
                 pmcCheck.setHardVersion(devInfo.getHardVersion());
                 //获取版本号
