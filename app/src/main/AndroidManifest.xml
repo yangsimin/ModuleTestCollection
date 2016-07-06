@@ -61,17 +61,17 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activity.BaseCheckActivity">
-            <!--<intent-filter>-->
-                <!--<action android:name="android.nfc.action.TECH_DISCOVERED"/>-->
-            <!--</intent-filter>-->
-            <!--<meta-data android:name="android.nfc.action.TECH_DISCOVERED"-->
-                       <!--android:resource="@xml/nfc_tech_filter"/>-->
+        <activity android:name=".activity.BaseCheckActivity"/>
+
+        <activity android:name=".activity.NFCActivity"
+            android:launchMode="singleTop"
+            android:theme="@style/Base.Theme.AppCompat.Light.Dialog">
             <intent-filter>
-                <action android:name="android.nfc.action.NDEF_DISCOVERED" />
-                <category android:name="android.intent.category.DEFAULT" />
-                <data android:mimeType="text/plain" />
+                <action android:name="android.nfc.action.TECH_DISCOVERED" />
             </intent-filter>
+            <meta-data
+                android:name="android.nfc.action.TECH_DISCOVERED"
+                android:resource="@xml/nfc_tech_filter" />
         </activity>
 
         <meta-data

@@ -10,31 +10,24 @@ import android.widget.TextView;
 
 import com.example.administrator.myapplication.R;
 import com.example.administrator.myapplication.base.BaseFragment;
-import com.example.administrator.myapplication.utils.Constants;
-import com.example.administrator.myapplication.utils.MethodCollection;
-import com.example.administrator.myapplication.utils.PMCCheckUtil;
 import com.keymantek.serialport.utils.HexUtils;
 import com.keymantek.serialport.utils.SerialPortOpera;
-
-import org.xmlpull.v1.XmlPullParserException;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.security.InvalidParameterException;
 
 /**
- * Created by Administrator on 2016/6/29 0029.
+ * Created by Administrator on 2016/7/5 0005.
  */
-public class SimpleSafeUnit extends BaseFragment
+public class SimpleScanTestFragment extends BaseFragment
 {
-    private static final String DATA = "E9000200FCE7E6";
+    private static final String DATA = "04E40400FF14";
     private static final String STR_BANRATE = "9600";
     private static final String STR_BIT = "8";
-    private static final String STR_EVENT = "E";
+    private static final String STR_EVENT = "N";
     private static final String STR_STOP = "1";
-    private static final int TYPE = 2;
-
-    private String safeVersion;
+    private static final int TYPE = 3;
 
     private TextView tvReceive, tvSend;
 
@@ -59,81 +52,29 @@ public class SimpleSafeUnit extends BaseFragment
         {
             String receStr = buffer.toString();
             buffer.delete(0, buffer.length());
+            Log.d("scan", receStr);
             if (!TextUtils.isEmpty(receStr))
             {
-                String trim = receStr.trim();
-                Log.d("result", "数据：" + trim);
-                Log.d("result", "数据长度:" + trim.length() + "");
-                String[] split = trim.split(" ");
-                if ("E9".equals(split[0])) ;
+                if (receStr.contains("04 D0 00 00 FF 2C 12 F3 00 00 0B"))
                 {
-                    if ("06".equals(split[2]))
+                    String fc = receStr.substring(receStr.indexOf("0B") + 3, receStr.indexOf("FC")).trim();
+                    String[] split = fc.split(" ");
+                    for (int i = 0; i < split.length; i++)
                     {
-                        safeVersion = split[6] + split[7] + split[8];
-                        try
-                        {
-                            PMCCheckUtil.getInstance(getActivity()).setSafeVersion(safeVersion);
-                        } catch (IOException e)
-                        {
-                            e.printStackTrace();
-                        } catch (XmlPullParserException e)
-                        {
-                            e.printStackTrace();
-                        }
-                        StringBuffer buf = new StringBuffer();
-                        for (int i = 0; i < split.length; i++)
-                        {
-                            buf.append(split[i]);
-                            buf.append(" ");
-                            if ("E6".equals(split[i]))
-                            {
-                                String s = buf.toString();
-                                tvReceive.setText("接收数据：" + s + "(合格！)");
-                                Log.d("result", s);
-                                Log.d("result", "检测合格");
-                                try
-                                {
-                                    inStream.close();
-                                } catch (IOException e)
-                                {
-                                    e.printStackTrace();
-                                }
-                                mSerialPortOpera.closeSerialPort(TYPE);
-                                autoSend = false;
-                                getActivity().setResult(Constants.RESULT_WELL);
-                                MethodCollection.delayFinish(getActivity(), 2000);
-                                return;
-                            }
-                        }
+                        int num = Integer.parseInt(split[i])%10;
+                        tvReceive.append(num + "");
                     }
+                    mSerialPortOpera.closeSerialPort(TYPE);
+                    autoSend = false;
                 }
             }
 
-//            Log.d("result", "不合格次数:" + sendTimes);
-            if (sendTimes++ > 16)
-
-            {
-//                Log.d("result", "检测不合格！！");
-                tvReceive.setText("检测不合格！");
-                autoSend = false;
-                try
-                {
-                    inStream.close();
-                } catch (IOException e)
-                {
-                    e.printStackTrace();
-                }
-                mSerialPortOpera.closeSerialPort(TYPE);
-                getActivity().setResult(Constants.RESULT_BAD);
-                MethodCollection.delayFinish(getActivity(), 2000);
-            }
+//            tvReceive.setText(receStr);
 
             if (autoSend)
-
             {
                 mSerialPortOpera.SerialPortWrite(HexUtils.hexStringToByte(DATA));
-                handler.postDelayed(this, 1000);
-                tvReceive.setText("发送次数：" + sendTimes);
+                handler.postDelayed(this, 2000);
             }
         }
     };
@@ -149,7 +90,7 @@ public class SimpleSafeUnit extends BaseFragment
     protected void initViews()
     {
         tvSend = (TextView) rootView.findViewById(R.id.send_tv);
-        tvSend.setText("发送数据：E9000200FCE7E6");
+        tvSend.setText("发送数据：04E40400FF14");
         tvReceive = (TextView) rootView.findViewById(R.id.receive_tv);
         mSerialPortOpera = new SerialPortOpera();
     }
@@ -162,7 +103,7 @@ public class SimpleSafeUnit extends BaseFragment
         try
         {
             mSerialPortOpera.openSerialPort(
-                    "/dev/ttyMT2",
+                    "/dev/ttyMT3",
                     Integer.parseInt(STR_BANRATE),
                     Integer.parseInt(STR_BIT),
                     STR_EVENT.toCharArray()[0],
@@ -221,22 +162,23 @@ public class SimpleSafeUnit extends BaseFragment
             // TODO Auto-generated method stub
             while (!isCancelled())
             {
-//                readData();
-                int readCount;
-                byte[] bytes = new byte[1024];
-                try
-                {
-                    if ((readCount = inStream.read(bytes)) != -1)
-                    {
-                        Log.w("iscoming", "有大小：" + readCount + "");
-                        String data = HexUtils.bytesToHexString(bytes, readCount);
-                        publishProgress(data);
-                    }
-
-                } catch (IOException e)
-                {
-                    e.printStackTrace();
-                }
+                readData();
+//                int readCount;
+//                byte[] bytes = new byte[40];
+//                try
+//                {
+//                    if ((readCount = inStream.read(bytes)) != -1)
+//                    {
+//                        Log.w("iscoming", "有大小：" + readCount + "");
+////                        String data = bytesToHexString(bytes, readCount);
+//                        String data = HexUtils.bytesToHexString(bytes, bytes.length);
+//                        publishProgress(data);
+//                    }
+//
+//                } catch (IOException e)
+//                {
+//                    e.printStackTrace();
+//                }
             }
             return null;
         }
@@ -285,7 +227,6 @@ public class SimpleSafeUnit extends BaseFragment
                 e.printStackTrace();
             }
         }
-
     }
 
     //产生异常是的错误对话框
@@ -305,4 +246,17 @@ public class SimpleSafeUnit extends BaseFragment
         bb.show();
     }
 
+    public static final String bytesToHexString(byte[] bArray, int size)
+    {
+        StringBuffer sb = new StringBuffer(size);
+        String sTemp;
+        for (int i = 0; i < size; i++)
+        {
+            sTemp = Integer.valueOf(0xF0 & bArray[i]).toString();
+            sb.append(sTemp);
+            sTemp = Integer.valueOf(0x0F & bArray[i]).toString();
+            sb.append(sTemp);
+        }
+        return sb.toString();
+    }
 }

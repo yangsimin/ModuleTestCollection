@@ -13,6 +13,7 @@ public class PMCCheck
     private String serialNum;
     private String proVersion;
     private String hardVersion;
+    private String safeVersion;
     private List<Result> results;
     private List<Setting> settings;
 
@@ -185,6 +186,16 @@ public class PMCCheck
     public void setHardVersion(String hardVersion)
     {
         this.hardVersion = hardVersion;
+    }
+
+    public String getSafeVersion()
+    {
+        return safeVersion;
+    }
+
+    public void setSafeVersion(String safeVersion)
+    {
+        this.safeVersion = safeVersion;
     }
 
     public List<Result> getResults()

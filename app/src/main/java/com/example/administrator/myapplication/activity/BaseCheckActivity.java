@@ -26,7 +26,6 @@ import com.example.administrator.myapplication.fragment.SimpleInFrared;
 import com.example.administrator.myapplication.fragment.SimpleLaserInFrared;
 import com.example.administrator.myapplication.fragment.SimpleSafeUnit;
 import com.example.administrator.myapplication.fragment.SimpleScanTestFragment;
-import com.example.administrator.myapplication.fragment.SleepTestFragment;
 import com.example.administrator.myapplication.fragment.SoundTestFragment;
 import com.example.administrator.myapplication.fragment.TouchTestFragment;
 import com.example.administrator.myapplication.fragment.VibratorTestFragment;
@@ -116,39 +115,36 @@ public class BaseCheckActivity extends AppCompatActivity implements View.OnClick
                 fragment = new SoundTestFragment();
                 break;
             case 9:
-                fragment = new SleepTestFragment();
-                break;
-            case 10:
 //                fragment = new LaserInfraredTestFragment();
 //                btnLayout.setVisibility(View.GONE);
                 fragment = new SimpleLaserInFrared();
                 btnLayout.setVisibility(View.GONE);
                 break;
-            case 11:
+            case 10:
 //                fragment = new InfraredTestFragment();
 //                btnLayout.setVisibility(View.GONE);
                 fragment = new SimpleInFrared();
                 btnLayout.setVisibility(View.GONE);
                 break;
-            case 12:
+            case 11:
 //                fragment = new SafeUnitTestFragment();
 //                btnLayout.setVisibility(View.GONE);
                 fragment = new SimpleSafeUnit();
                 btnLayout.setVisibility(View.GONE);
                 break;
-            case 13:
+            case 12:
                 fragment = new NFCTestFragment();
-                btnLayout.setVisibility(View.GONE);
+//                btnLayout.setVisibility(View.GONE);
                 break;
-            case 14:
+            case 13:
                 fragment = new MultiTouchFragment();
                 btnLayout.setVisibility(View.GONE);
                 break;
-            case 15:
+            case 14:
                 fragment = new TouchTestFragment();
                 btnLayout.setVisibility(View.GONE);
                 break;
-            case 16:
+            case 15:
                 fragment = new SimpleScanTestFragment();
                 break;
 //            case 16:

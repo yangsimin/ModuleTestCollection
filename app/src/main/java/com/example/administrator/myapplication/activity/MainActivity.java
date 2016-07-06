@@ -34,7 +34,7 @@ public class MainActivity extends AppCompatActivity
 
     private GridViewAdapter gridViewAdapter;
 
-    private TextView tvVersion;
+    private TextView tvSoftVersion,tvSafeVersion;
 
     private int index;
 
@@ -51,7 +51,8 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
 
         gvMain = (MyGridView) findViewById(R.id.main_gv);
-        tvVersion = (TextView) findViewById(R.id.version_tv);
+        tvSoftVersion = (TextView) findViewById(R.id.softVersion_tv);
+        tvSafeVersion = (TextView) findViewById(R.id.safeVersion_tv);
 
         //获取包信息
         PackageManager manager = this.getPackageManager();
@@ -64,7 +65,7 @@ public class MainActivity extends AppCompatActivity
             e.printStackTrace();
         }
         //设置版本号
-        tvVersion.setText(info.versionName);
+        tvSoftVersion.setText("v" + info.versionName);
 
         //是否使用配置文件
         if (Constants.useFilter) testFilter();
@@ -93,6 +94,8 @@ public class MainActivity extends AppCompatActivity
         try
         {
             pmcCheck = PMCCheckUtil.getInstance(this);
+            if (pmcCheck.getSafeVersion() != null)
+                tvSafeVersion.setText("安全单元版本号：" + pmcCheck.getSafeVersion());
         } catch (IOException | XmlPullParserException e)
         {
             e.printStackTrace();
@@ -141,8 +144,8 @@ public class MainActivity extends AppCompatActivity
         }
         enableItem = new ArrayList<>();
         booItem = new ArrayList<>();
-        enableItem.add(Constants.ITEMS.length - 1);
-        booItem.add(false);
+//        enableItem.add(Constants.ITEMS.length - 1);
+//        booItem.add(false);
         try
         {
             List<PMCCheck.Result> results = PMCCheckUtil.getInstance(this).getResults();

@@ -85,6 +85,10 @@ public class PMCCheckUtil
                     {
                         pmcCheck.setHardVersion(xpp.nextText());
                     }
+                    else if ("安全单元版本号".equals(stName))
+                    {
+                        pmcCheck.setSafeVersion(xpp.nextText());
+                    }
                     else if ("检测结果集".equals(stName))
                     {
                         result = pmcCheck.new Result();
@@ -153,7 +157,7 @@ public class PMCCheckUtil
         OutputStream outStream = new FileOutputStream(new File(strAddress, "PMCCheck.sys"));
         XmlSerializer serializer = Xml.newSerializer();
         serializer.setOutput(outStream, "UTF-8");
-        serializer.startDocument("utf-8", null);
+        serializer.startDocument(null, null);
         serializer.startTag(null, "设备检测信息");
         serializer.text(enter);
         setTextByTag(serializer, "设备唯一标识", pmcCheck.getId());
@@ -161,6 +165,7 @@ public class PMCCheckUtil
         setTextByTag(serializer, "序列号", pmcCheck.getSerialNum());
         setTextByTag(serializer, "掌机检测程序版本", pmcCheck.getProVersion());
         setTextByTag(serializer, "硬件版本号", pmcCheck.getHardVersion());
+        if (pmcCheck.getSafeVersion() != null) setTextByTag(serializer, "安全单元版本号", pmcCheck.getSafeVersion());
 
         for (int i = 0; i < pmcCheck.getResults().size(); i++)
         {
