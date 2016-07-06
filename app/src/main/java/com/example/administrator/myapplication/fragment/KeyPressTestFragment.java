@@ -58,6 +58,7 @@ public class KeyPressTestFragment extends BaseFragment
     public void onKeyDown(int keyCode, KeyEvent event)
     {
         ImageButton curBtn = null;
+//        Log.d("key", keyCode + "");
         switch (keyCode)
         {
             case KeyEvent.KEYCODE_DPAD_UP:

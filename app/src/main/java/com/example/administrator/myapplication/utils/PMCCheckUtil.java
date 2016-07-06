@@ -158,6 +158,7 @@ public class PMCCheckUtil
         XmlSerializer serializer = Xml.newSerializer();
         serializer.setOutput(outStream, "UTF-8");
         serializer.startDocument(null, null);
+        serializer.text(enter);
         serializer.startTag(null, "设备检测信息");
         serializer.text(enter);
         setTextByTag(serializer, "设备唯一标识", pmcCheck.getId());
